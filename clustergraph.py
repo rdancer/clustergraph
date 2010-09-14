@@ -19,6 +19,10 @@
 #
 # Usage
 #
+# Copy the “clustergraph.py” file into the directory alongside the python
+# script.  Then, use the ‘import’ stanza, and then simply call
+# clustergraph.drawGraph():
+#
 #   import clustergraph 
 #   clustergraph.drawGraph([[1.0, 1.1], [1.2, 1.3, 1.4], [1.5]])
 #
