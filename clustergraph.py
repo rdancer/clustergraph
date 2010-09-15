@@ -58,6 +58,7 @@ def drawGraph(clusters):
     i = 0
     j = 0
     length = 0
+    pointColours = []
 
     for cluster in clusters:
 	length += 1
@@ -69,13 +70,30 @@ def drawGraph(clusters):
 	break
     coords.append([]) # For the z-axis/colors/point size
 
-    clusterNumber = 30
+    # Because of the braindead way of serializing the point coordinates and
+    # other data about the points, this is hairy.  We specify the colour for
+    # each point individually, despite really caring about the colour of the
+    # whole series
+
+    # 28 clusters supported
+    palette = [ "FF0000" ,"00FF00" ,"0000FF" ,"FFFF00" ,"FF00FF"
+	    ,"FFFF00" ,"00FFFF" ,"FF00FF" ,"00FFFF" ,"AA0000" ,"00AA00"
+	    ,"0000AA" ,"AAAA00" ,"AA00AA" ,"AAAA00" ,"00AAAA" ,"AA00AA"
+	    ,"00AAAA" ,"550000" ,"005500" ,"000055" ,"555500" ,"550055"
+	    ,"555500" ,"005555" ,"550055" ,"005555" ]
+    clusterNumber = 1
     for cluster in clusters:
 	for point in cluster.points:
 	    for i in xrange(point.n):
 		coords[i].append(point.coords[i])
-	    coords[2].append(clusterNumber)
-	clusterNumber += 30
+	    # Different size dots
+	    #coords[2].append(clusterNumber)
+	    coords[2].append(1)
+	    try:
+		pointColours.append(palette[clusterNumber])
+	    except:
+		pointColours.append("FFFFFF")
+	clusterNumber += 1
 
 
     xlist = coords[0]
@@ -92,4 +110,5 @@ def drawGraph(clusters):
     chart.set_axis_range('t', min(xlist) - padding, max(xlist) + padding)
     chart.set_axis_range('y', min(ylist) - padding, max(ylist) + padding)
     chart.set_axis_range('r', min(ylist) - padding, max(ylist) + padding)
+    chart.set_colours_within_series(pointColours)
     chart.download('clusters.png')
