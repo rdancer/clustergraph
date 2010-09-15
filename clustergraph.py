@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 __author__ = "Jan Minář <rdancer@rdancer.org>"
 
 #
@@ -88,4 +88,6 @@ def drawGraph(clusters):
     chart.add_data(xlist)
     chart.add_data(ylist)
     chart.add_data(zlist)
+    chart.set_axis_range('x', min(xlist) - padding, max(xlist) + padding)
+    chart.set_axis_range('y', min(ylist) - padding, max(ylist) + padding)
     chart.download('clusters.png')
