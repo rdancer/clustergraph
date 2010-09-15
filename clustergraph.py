@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-__version__ = "0.1-rc1"
+__version__ = "0.2-rc0"
 __author__ = "Jan Minář <rdancer@rdancer.org>"
 
 #
@@ -30,12 +30,16 @@ __author__ = "Jan Minář <rdancer@rdancer.org>"
 # clustergraph.drawGraph():
 #
 #   import clustergraph 
-#   clustergraph.drawGraph([[1.0, 1.1], [1.2, 1.3, 1.4], [1.5]])
+#   width = height = 500
+#   data = [[[1.0, 1.1], [1.2, 1.3], [1.4, 1.5]], [[5.6, 4.3], [4.9, 5.1]]]
+#   clustergraph.drawGraph(data, width, height)
 #
 
 import os
 import sys
 import math
+
+import pygame   #loads the pygame module
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(ROOT, '..'))
@@ -45,9 +49,55 @@ from pygooglechart import ScatterChart
 #import settings
 #import helper
 
+_image_file_name = 'clusters.png'
+
 
 def drawGraph(clusters, width = 500, height = 500):
-    """Draw a Cartesian graph on screen; each cluster has a different colour."""
+    """
+    Draw a Cartesian graph on screen; each cluster has a different colour.
+    """
+
+    #
+    # Get the image data
+    #
+
+    saveGraph(clusters, width, height)
+
+ 
+    #
+    # Paint the picture on screen
+    #
+
+    screen = pygame.display.set_mode((width, height))
+     
+    # Load the image data
+    picture = pygame.image.load(_image_file_name)
+
+    surface = pygame.display.get_surface()
+    # Display the picture at (0, 0)
+    surface.blit(picture, (0, 0))
+
+    # Update display
+    pygame.display.update()
+
+    #
+    # Quit on keypresses and when closed from the UI
+    #
+
+    while 1:
+	for event in pygame.event.get():
+	    if event.type == pygame.QUIT:
+		sys.exit()
+	    elif (event.type == pygame.KEYUP) or (event.type == pygame.KEYDOWN):
+		if (event.key == pygame.K_ESCAPE) or (event.key == pygame.K_q) \
+			or (event.key == pygame.K_SPACE): 
+		    sys.exit()
+
+
+def saveGraph(clusters, width = 500, height = 500):
+    """
+    Generate graph and save it as a PNG file.
+    """
 
 #    width = 500
 #    height = width
@@ -142,4 +192,4 @@ def drawGraph(clusters, width = 500, height = 500):
     chart.set_colours_within_series(pointColours)
 
 
-    chart.download('clusters.png')
+    chart.download(_image_file_name)
