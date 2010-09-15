@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-__version__ = "0.0.5"
+__version__ = "0.1-rc0"
 __author__ = "Jan Minář <rdancer@rdancer.org>"
 
 #
@@ -46,11 +46,11 @@ from pygooglechart import ScatterChart
 #import helper
 
 
-def drawGraph(clusters):
+def drawGraph(clusters, width = 500, height = 500):
     """Draw a Cartesian graph on screen; each cluster has a different colour."""
 
-    width = 250
-    height = width
+#    width = 500
+#    height = width
     padding = 30
     xlist = []
     ylist = []
@@ -88,12 +88,13 @@ def drawGraph(clusters):
 		coords[i].append(point.coords[i])
 	    # Different size dots
 	    #coords[2].append(clusterNumber)
-	    coords[2].append(1)
+	    coords[2].append(5)
 	    try:
 		pointColours.append(palette[clusterNumber])
 	    except:
-		pointColours.append("FFFFFF")
-	clusterNumber += 1
+		pointColours.append("000000")
+	clusterNumber += 8
+
 
 
     xlist = coords[0]
@@ -103,12 +104,28 @@ def drawGraph(clusters):
     chart = ScatterChart(width, height, 
                          x_range=(min(xlist) - padding, max(xlist) + padding),
                          y_range=(min(ylist) - padding, max(ylist) + padding))
-    chart.add_data(xlist)
-    chart.add_data(ylist)
-    chart.add_data(zlist)
     chart.set_axis_range('x', min(xlist) - padding, max(xlist) + padding)
     chart.set_axis_range('t', min(xlist) - padding, max(xlist) + padding)
     chart.set_axis_range('y', min(ylist) - padding, max(ylist) + padding)
     chart.set_axis_range('r', min(ylist) - padding, max(ylist) + padding)
+
+#    # Add an invisible point to allow scalling of the other points
+#    # This must come after the min/max above
+#    for cluster in clusters:
+#	for point in cluster.points:
+#	    for i in xrange(point.n):
+#		coords[i].append(point.coords[i] + 16300)
+#	    # Must be bigger then the rest
+#	    coords[2].append(10)
+#	    # White-on-white, i.e. invisible
+#	    pointColours.append("FFFFFF")
+#	    break
+#	break
+
+    chart.add_data(xlist)
+    chart.add_data(ylist)
+    chart.add_data(zlist)
     chart.set_colours_within_series(pointColours)
+
+
     chart.download('clusters.png')
