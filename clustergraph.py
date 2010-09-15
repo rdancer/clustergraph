@@ -89,5 +89,7 @@ def drawGraph(clusters):
     chart.add_data(ylist)
     chart.add_data(zlist)
     chart.set_axis_range('x', min(xlist) - padding, max(xlist) + padding)
+    chart.set_axis_range('t', min(xlist) - padding, max(xlist) + padding)
     chart.set_axis_range('y', min(ylist) - padding, max(ylist) + padding)
+    chart.set_axis_range('r', min(ylist) - padding, max(ylist) + padding)
     chart.download('clusters.png')
