@@ -59,14 +59,22 @@ def drawGraph(clusters):
     for cluster in clusters:
 	for point in cluster.points:
 	    for i in xrange(point.n):
+		coords.append([])
+	    break
+	break
+
+    for cluster in clusters:
+	for point in cluster.points:
+	    for i in xrange(point.n):
 		coords[i].append(point.coords[i])
 
     xlist = coords[0]
-    ylist = coords[0]
+    ylist = coords[1]
 
     chart = ScatterChart(width, height, 
                          x_range=(min(xlist) - padding, max(xlist) + padding),
                          y_range=(min(ylist) - padding, max(ylist) + padding))
     chart.add_data(xlist)
     chart.add_data(ylist)
+    chart.set_colours_within_series(["00FF00", "FF0000", "0000FF"])
     chart.download('clusters.png')
