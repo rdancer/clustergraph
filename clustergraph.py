@@ -55,26 +55,63 @@ def drawGraph(clusters):
     xlist = []
     ylist = []
     coords = []
+    i = 0
+    j = 0
+    length = 0
 
     for cluster in clusters:
+	length += 1
 	for point in cluster.points:
-	    for i in xrange(point.n):
+	    dimension = point.n
+	    for i in xrange(dimension):
 		coords.append([])
 	    break
 	break
+    coords.append([]) # For the z-axis/colors/point size
 
+#    for i in xrange(dimension):
+#	for j in xrange(length):
+#	    for cluster in clusters:
+#		try:
+#		    coords[i].append(cluster.points[j].coords[i])
+#		except:
+#		    coords[i].append(0.0)
+#		    print ""
+
+    clusterNumber = 30
     for cluster in clusters:
 	for point in cluster.points:
 	    for i in xrange(point.n):
 		coords[i].append(point.coords[i])
+	    coords[2].append(clusterNumber)
+	clusterNumber += 30
 
     xlist = coords[0]
     ylist = coords[1]
+    zlist = coords[2]
 
     chart = ScatterChart(width, height, 
                          x_range=(min(xlist) - padding, max(xlist) + padding),
                          y_range=(min(ylist) - padding, max(ylist) + padding))
     chart.add_data(xlist)
     chart.add_data(ylist)
-    chart.set_colours_within_series(["00FF00", "FF0000", "0000FF"])
+    chart.add_data(zlist)
+#    chart.set_colours([
+#	"000000"
+#	,"FF0000"
+#	,"00FF00"
+#	,"0000FF"
+#	,"FFFF00"
+#	,"FF00FF"
+#	,"AA0000"
+#	,"00AA00"
+#	,"0000AA"
+#	,"AAAA00"
+#	,"AA00AA"
+#	,"550000"
+#	,"005500"
+#	,"000055"
+#	,"555500"
+#	,"550055"
+#	])
     chart.download('clusters.png')
