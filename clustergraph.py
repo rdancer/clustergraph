@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __author__ = "Jan Minář <rdancer@rdancer.org>"
 
 #
@@ -69,15 +69,6 @@ def drawGraph(clusters):
 	break
     coords.append([]) # For the z-axis/colors/point size
 
-#    for i in xrange(dimension):
-#	for j in xrange(length):
-#	    for cluster in clusters:
-#		try:
-#		    coords[i].append(cluster.points[j].coords[i])
-#		except:
-#		    coords[i].append(0.0)
-#		    print ""
-
     clusterNumber = 30
     for cluster in clusters:
 	for point in cluster.points:
@@ -85,6 +76,7 @@ def drawGraph(clusters):
 		coords[i].append(point.coords[i])
 	    coords[2].append(clusterNumber)
 	clusterNumber += 30
+
 
     xlist = coords[0]
     ylist = coords[1]
@@ -96,22 +88,4 @@ def drawGraph(clusters):
     chart.add_data(xlist)
     chart.add_data(ylist)
     chart.add_data(zlist)
-#    chart.set_colours([
-#	"000000"
-#	,"FF0000"
-#	,"00FF00"
-#	,"0000FF"
-#	,"FFFF00"
-#	,"FF00FF"
-#	,"AA0000"
-#	,"00AA00"
-#	,"0000AA"
-#	,"AAAA00"
-#	,"AA00AA"
-#	,"550000"
-#	,"005500"
-#	,"000055"
-#	,"555500"
-#	,"550055"
-#	])
     chart.download('clusters.png')
