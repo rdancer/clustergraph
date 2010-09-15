@@ -63,12 +63,32 @@ def drawGraph(clusters, width = 500, height = 500):
 
     saveGraph(clusters, width, height)
 
+
+    #
+    # Get the number of clusters and points
+    #
+
+    clusterCount = 0
+    pointCount = 0
+    for cluster in clusters:
+	clusterCount += 1
+	for point in cluster.points:
+	    pointCount += 1
  
     #
     # Paint the picture on screen
     #
 
     screen = pygame.display.set_mode((width, height))
+
+    # Build and set the title string
+    caption = "clustergraph - %d point" % pointCount
+    if pointCount != 1:
+	caption += "s"
+    caption += " in %d cluster" % clusterCount
+    if clusterCount != 1:
+	caption += "s"
+    pygame.display.set_caption(caption)
      
     # Load the image data
     picture = pygame.image.load(_image_file_name)
@@ -107,11 +127,9 @@ def saveGraph(clusters, width = 500, height = 500):
     coords = []
     i = 0
     j = 0
-    length = 0
     pointColours = []
 
     for cluster in clusters:
-	length += 1
 	for point in cluster.points:
 	    dimension = point.n
 	    for i in xrange(dimension):
