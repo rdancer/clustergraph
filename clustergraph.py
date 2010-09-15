@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-__version__ = "0.1-rc0"
+__version__ = "0.1-rc1"
 __author__ = "Jan Minář <rdancer@rdancer.org>"
 
 #
@@ -76,11 +76,25 @@ def drawGraph(clusters, width = 500, height = 500):
     # whole series
 
     # 28 clusters supported
-    palette = [ "FF0000" ,"00FF00" ,"0000FF" ,"FFFF00" ,"FF00FF"
+    palette = [
+	    "FF0000" ,"00FF00" ,"0000FF" ,"FFFF00" ,"FF00FF"
 	    ,"FFFF00" ,"00FFFF" ,"FF00FF" ,"00FFFF" ,"AA0000" ,"00AA00"
 	    ,"0000AA" ,"AAAA00" ,"AA00AA" ,"AAAA00" ,"00AAAA" ,"AA00AA"
 	    ,"00AAAA" ,"550000" ,"005500" ,"000055" ,"555500" ,"550055"
-	    ,"555500" ,"005555" ,"550055" ,"005555" ]
+	    ,"555500" ,"005555" ,"550055" ,"005555"
+	    ,
+	    "FF3333" ,"33FF33" ,"3333FF" ,"FFFF33" ,"FF33FF"
+	    ,"FFFF33" ,"33FFFF" ,"FF33FF" ,"33FFFF" ,"AA3333" ,"33AA33"
+	    ,"3333AA" ,"AAAA33" ,"AA33AA" ,"AAAA33" ,"33AAAA" ,"AA33AA"
+	    ,"33AAAA" ,"553333" ,"335533" ,"333355" ,"555533" ,"553355"
+	    ,"555533" ,"335555" ,"553355" ,"335555"
+	    ,
+	    "FF9999" ,"99FF99" ,"9999FF" ,"FFFF99" ,"FF99FF"
+	    ,"FFFF99" ,"99FFFF" ,"FF99FF" ,"99FFFF" ,"AA9999" ,"99AA99"
+	    ,"9999AA" ,"AAAA99" ,"AA99AA" ,"AAAA99" ,"99AAAA" ,"AA99AA"
+	    ,"99AAAA" ,"559999" ,"995599" ,"999955" ,"555599" ,"559955"
+	    ,"555599" ,"995555" ,"559955" ,"995555"
+	    ]
     clusterNumber = 1
     for cluster in clusters:
 	for point in cluster.points:
@@ -93,7 +107,7 @@ def drawGraph(clusters, width = 500, height = 500):
 		pointColours.append(palette[clusterNumber])
 	    except:
 		pointColours.append("000000")
-	clusterNumber += 8
+	clusterNumber += 1
 
 
 
