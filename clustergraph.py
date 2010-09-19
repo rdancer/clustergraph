@@ -211,3 +211,20 @@ def saveGraph(clusters, width = 500, height = 500):
 
 
     chart.download(_image_file_name)
+
+
+##
+# Save points to a file on the local file system
+#
+# Note: The printout formating is given by the specification
+#
+# @param clusters point clusters
+# @param fileName name of the file to save to
+def saveClusters(clusters, fileName = "clusters.txt"):
+    saveFile = open(fileName, 'w')
+
+    count = 0
+    for cluster in clusters:
+	count += 1
+	saveFile.write("Cluster  %d : %s\n\n" % (count, cluster))
+    saveFile.close()
